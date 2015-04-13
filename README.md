@@ -1,7 +1,13 @@
 # Brutus
 Brutus is your bouncer; your muscle; your protector &amp; defender
 
-Brutus is a WordPress plugin designed to protect the `wp-login.php` file of your installation against brute-force attacks. It does this by assigning each anonymous visitor to your site a unique ID in a cookie (which is good for 24 hours) and is used to generate something called a nonce. These nonces are used to confirm that requests to `wp-login.php` were initialized by a person who is physically browsing around your site vs. an automated script trying to brute-force its way through. Any request that fails the nonce check is bounced back to the `network_home_url()` of your site.
+Brutus is a WordPress plugin designed to protect the `wp-login.php` file of your installation against brute-force attacks.
+
+It does this by:
+
+1. assigning each anonymous visitor to your site a unique ID in a cookie (which is good for 24 hours) and is used to generate something called a nonce
+2. Nonces are used to confirm that requests to `wp-login.php` were initialized by a person who is physically browsing around your site vs. an automated script trying to brute-force its way through
+3. Any request that fails the nonce check is bounced back to the `network_home_url()` of your site.
 
 ## Signing in
 
