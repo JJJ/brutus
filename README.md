@@ -32,3 +32,12 @@ There are a few potential gotchas
 * If you've customized your login or registration process with a plugin or custom theme, your mileage may vary here. Please submit pull requests if you're able to help make Brutus more flexible.
 * When a user signs out, they are redirected back to the root of the site rather than `wp-login.php`. This is because the nonce used by the previously signed-in user does not match the nonce of the now signed-out user, Brutus (correctly) detects a mismatch, and bounces the user away from `wp-login.php`. This could be improved, but I haven't spent enough time trying to unwind the redirection dance here.
 * This has not been tested with BuddyPress or bbPress yet. Please submit pull requests if you're able to improve compatibility with these or any other plugins.
+* Sites that use full-page caching and also link to `wp-login.php` in a sidebar or toolbar may not function correctly without additional configuration. This is because pages with these links will contain nonces that are not meant for the current anonymous user to see. This can likely be worked around with some JavaScript at a later date (pull requests welcome and encouraged.)
+
+## Why was this built?
+
+This plugin exists because I wanted an inexpensive way within WordPress to protect against brute-force attacks to `wp-login.php` without requiring a connection to WordPress.com via Jetpack and using what used to be known as BruteProtect, which is a really great service if you're able to run it.
+
+## What is the release schedule?
+
+Probably random, or as pull requests come in
