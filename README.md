@@ -32,6 +32,7 @@ When a user attempts to reset their password, all redirects should happen per us
 
 There are a few potential gotchas
 
+* Brutus has not been tested with the XML-RPC or REST API.
 * If you've customized your login or registration process with a plugin or custom theme, your mileage may vary here. Please submit pull requests if you're able to help make Brutus more flexible.
 * When a user signs out, they are redirected back to the root of the site rather than `wp-login.php`. This is because the nonce used by the previously signed-in user does not match the nonce of the now signed-out user, Brutus (correctly) detects a mismatch, and bounces the user away from `wp-login.php`. This could be improved, but I haven't spent enough time trying to unwind the redirection dance here.
 * This has not been tested with BuddyPress or bbPress yet. Please submit pull requests if you're able to improve compatibility with these or any other plugins.
