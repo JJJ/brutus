@@ -97,7 +97,9 @@ final class Brutus {
 	 * @since Brutus (1.0.0)
 	 */
 	public function login_init() {
-		self::verify_nonce();
+		if ( ! did_action('wp_logout') ) {
+			self::verify_nonce();
+		}
 	}
 
 	/**
