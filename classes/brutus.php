@@ -328,13 +328,13 @@ final class Brutus {
 		$i     = wp_nonce_tick();
 
 		// Nonce generated 0-12 hours ago
-		$expected = substr( wp_hash( "$salt|$i|$action|$uid|$token", 'nonce'), -12, 10 );
+		$expected = substr( wp_hash( "{$salt}|{$i}|{$action}|{$uid}|{$token}", 'nonce'), -12, 10 );
 		if ( hash_equals( $expected, $nonce ) ) {
 			return 1;
 		}
 
 		// Nonce generated 12-24 hours ago
-		$expected = substr( wp_hash( "$salt|$i|$action|$uid|$token", 'nonce' ), -12, 10 );
+		$expected = substr( wp_hash( "{$salt}|{$i}|{$action}|{$uid}|{$token}", 'nonce' ), -12, 10 );
 		if ( hash_equals( $expected, $nonce ) ) {
 			return 2;
 		}
@@ -373,6 +373,6 @@ final class Brutus {
 		$token = wp_get_session_token();
 		$i     = wp_nonce_tick();
 
-		return substr( wp_hash( "$salt|$i|$action|$uid|$token", 'nonce' ), -12, 10 );
+		return substr( wp_hash( "{$salt}|{$i}|{$action}|{$uid}|{$token}", 'nonce' ), -12, 10 ) . "_{$salt}";
 	}
 }
