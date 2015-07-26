@@ -288,4 +288,91 @@ final class Brutus {
 		wp_safe_redirect( network_home_url() );
 		die;
 	}
+
+	/** Static Nonces *********************************************************/
+
+	/**
+	 * Verify salted nonce
+	 *
+	 * @since Brutus (1.1.0)
+	 *
+	 * @param  string $nonce
+	 * @param  string $action
+	 * @return boolean|int
+	 */
+	public static function pluggable_verify_nonce( $nonce = '', $action = -1 ) {
+
+		$nonce = (string) $nonce;
+
+		// Attempt to salt
+        list( $nonce, $salt ) = explode( '_', $nonce );
+		if ( ! $salt ) {
+			return false;
+		}
+
+		// Get user
+		$user = wp_get_current_user();
+		$uid  = ! empty( $user->ID )
+			? (int) $user->ID
+			: 0;
+
+		if ( 0 === $uid ) {
+			$uid = apply_filters( 'nonce_user_logged_out', $uid, $action );
+		}
+
+		if ( empty( $nonce ) ) {
+			return false;
+		}
+
+		$token = wp_get_session_token();
+		$i     = wp_nonce_tick();
+
+		// Nonce generated 0-12 hours ago
+		$expected = substr( wp_hash( "$salt|$i|$action|$uid|$token", 'nonce'), -12, 10 );
+		if ( hash_equals( $expected, $nonce ) ) {
+			return 1;
+		}
+
+		// Nonce generated 12-24 hours ago
+		$expected = substr( wp_hash( "$salt|$i|$action|$uid|$token", 'nonce' ), -12, 10 );
+		if ( hash_equals( $expected, $nonce ) ) {
+			return 2;
+		}
+
+		// Invalid nonce
+		return false;
+	}
+
+	/**
+	 * Create salted nonce
+	 *
+	 * @since Brutus (1.1.0)
+	 *
+	 * @staticvar string $salt
+	 * @param     string $action
+	 *
+	 * @return string
+	 */
+	public static function pluggable_create_nonce( $action = -1 ) {
+		static $salt = null;
+
+		if ( is_null( $salt ) ) {
+			$salt = wp_generate_password( 10, false, false );
+		}
+
+		// Get user
+		$user = wp_get_current_user();
+		$uid  = ! empty( $user->ID )
+			? (int) $user->ID
+			: 0;
+
+		if ( 0 === $uid ) {
+			$uid = apply_filters( 'nonce_user_logged_out', $uid, $action );
+		}
+
+		$token = wp_get_session_token();
+		$i     = wp_nonce_tick();
+
+		return substr( wp_hash( "$salt|$i|$action|$uid|$token", 'nonce' ), -12, 10 );
+	}
 }
