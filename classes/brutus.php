@@ -97,7 +97,7 @@ final class Brutus {
 	 * @since Brutus (1.0.0)
 	 */
 	public function login_init() {
-		if ( ! did_action('wp_logout') ) {
+		if ( ! did_action( 'wp_logout' ) ) {
 			self::verify_nonce();
 		}
 	}
@@ -115,7 +115,7 @@ final class Brutus {
 			DAY_IN_SECONDS * 2,
 			is_ssl(),
 			NONCE_SALT
-	    );
+		);
 
 		// Initialize the cookie
 		$this->cookie->init();
