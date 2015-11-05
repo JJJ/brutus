@@ -1,12 +1,9 @@
 <?php
 
 /**
- * The Brutus Cookie Class
+ * Brutus Cookie Class
  *
- * Brutus is your bouncer; your muscle; your protector & defender
- *
- * @package Brutus
- * @subpackage Classes
+ * @package Plugins/Brutus/Classes/Cookie
  */
 
 // Exit if accessed directly
@@ -40,6 +37,11 @@ final class Brutus_Cookie {
 	protected $salt;
 
 	/**
+	 * @var boolean Whether cookie is HTTP only
+	 */
+	protected $http_only;
+
+	/**
 	 * @var PasswordHash Container for an instance of PasswordHash
 	 */
 	protected $hasher = null;
@@ -59,6 +61,7 @@ final class Brutus_Cookie {
 		$this->expires     = $expires;
 		$this->secure      = $secure;
 		$this->salt        = $salt;
+		$this->http_only   = true; // Always http_only
 	}
 
 	/**
@@ -110,7 +113,8 @@ final class Brutus_Cookie {
 			time() - YEAR_IN_SECONDS,
 			COOKIEPATH,
 			COOKIE_DOMAIN,
-			$this->secure
+			$this->secure,
+			$this->http_only
 		);
 	}
 
@@ -165,7 +169,8 @@ final class Brutus_Cookie {
 			$expires,
 			COOKIEPATH,
 			COOKIE_DOMAIN,
-			$this->secure
+			$this->secure,
+			$this->http_only
 		);
 	}
 

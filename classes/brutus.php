@@ -1,12 +1,9 @@
 <?php
 
 /**
- * The Brutus Class
+ * Main Brutus Class
  *
- * Brutus is your bouncer; your muscle; your protector & defender
- *
- * @package Brutus
- * @subpackage Classes
+ * @package Plugins/Brutus/Classes/Main
  */
 
 // Exit if accessed directly

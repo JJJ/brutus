@@ -5,10 +5,7 @@
  *
  * Brutus is your bouncer; your muscle; your protector & defender
  *
- * $Id$
- *
  * @package Brutus
- * @subpackage Main
  */
 
 /**
@@ -17,7 +14,7 @@
  * Description: Brutus is your bouncer; your muscle; your protector & defender
  * Author:      John James Jacoby
  * Author URI:  https://flox.io
- * Version:     1.0.0
+ * Version:     1.1.0
  * Text Domain: brutus
  * Domain Path: /languages/
  * License:     GPLv2 or later (license.txt)
@@ -36,8 +33,8 @@ function wp_brutus() {
 	$path = dirname(__FILE__);
 
 	// Includes
-	include $path . '/classes/brutus.php';
-	include $path . '/classes/cookie.php';
+	require_once $path . '/classes/brutus.php';
+	require_once $path . '/classes/cookie.php';
 
 	// That no-good sailor's got me girl!
 	new Brutus();
