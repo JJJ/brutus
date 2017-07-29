@@ -55,7 +55,7 @@ function wp_create_nonce( $action = -1 ) {
 }
 endif;
 
-if ( !function_exists('is_user_logged_in') ) :
+if ( ! function_exists( 'is_user_logged_in' ) ) :
 /**
  * Checks if the current visitor is a logged in user.
  *
@@ -70,7 +70,7 @@ function is_user_logged_in() {
 }
 endif;
 
-if ( !function_exists('wp_get_current_user') ) :
+if ( ! function_exists( 'wp_get_current_user' ) ) :
 /**
  * Retrieve the current user object.
  *
