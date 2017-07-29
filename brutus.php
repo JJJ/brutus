@@ -15,23 +15,12 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Initialize Brutus
- *
- * @since Brutus (1.0.0)
- */
-function wp_brutus() {
+// Includes
+require_once dirname( __FILE__ ) . '/classes/brutus.php';
+require_once dirname( __FILE__ ) . '/classes/cookie.php';
 
-	$path = dirname(__FILE__);
-
-	// Includes
-	require_once $path . '/classes/brutus.php';
-	require_once $path . '/classes/cookie.php';
-
-	// That no-good sailor's got me girl!
-	new Brutus();
-}
-add_action( 'init', 'wp_brutus' );
+// That no-good sailor's got me girl!
+new Brutus();
 
 if ( ! function_exists( 'wp_verify_nonce' ) ) :
 /**

@@ -69,21 +69,18 @@ final class Brutus {
 		add_action( 'wp_login',    array( $this, 'wp_login'    ) );
 		add_action( 'wp_logout',   array( $this, 'wp_logout'   ) );
 
-		// Logged-in user support
-		if ( is_user_logged_in() ) {
-			add_filter( 'logout_url', array( $this, 'logout_url' ) );
-			return;
-		}
-
-		// Initialize the cookie
-		$this->cookie_init();
-
 		// Filters
+		add_filter( 'logout_url',            array( $this, 'logout_url'         ) );
 		add_filter( 'login_url',             array( $this, 'login_url'          ) );
 		add_filter( 'lostpassword_url',      array( $this, 'lostpassword_url'   ) );
 		add_filter( 'register_url',          array( $this, 'register_url'       ) );
 		add_filter( 'site_url',              array( $this, 'site_url'           ), 10, 3 );
 		add_filter( 'nonce_user_logged_out', array( $this, 'logged_out_user_id' ) );
+
+		// Logged-in user support
+		if ( ! is_user_logged_in() ) {
+			$this->cookie_init();
+		}
 	}
 
 	/** Actions ***************************************************************/
