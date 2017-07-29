@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Brutus is a real classy bouncer
  *
- * @since Brutus (1.0.0)
+ * @since 1.0.0 Brutus
  */
 final class Brutus {
 
@@ -59,7 +59,7 @@ final class Brutus {
 
 	/**
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	public function __construct() {
 
@@ -91,7 +91,7 @@ final class Brutus {
 	/**
 	 * Verify Brutus nonce on `login_init` action
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	public function login_init() {
 		if ( ! did_action( 'wp_logout' ) ) {
@@ -102,7 +102,7 @@ final class Brutus {
 	/**
 	 * Initialize the logged-out-user cookie
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	public function cookie_init() {
 
@@ -123,7 +123,7 @@ final class Brutus {
 	/**
 	 * Filter `login_url` and protect it with Brutus nonce
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $login_url
 	 * @return string Nonced URL for login
@@ -135,7 +135,7 @@ final class Brutus {
 	/**
 	 * Filter `logout_url` and protect it with Brutus nonce
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $logout_url
 	 * @return string Nonced URL for logout
@@ -147,7 +147,7 @@ final class Brutus {
 	/**
 	 * Filter `lostpassword_url` and protect it with Brutus nonce
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $lostpassword_url
 	 * @return string Nonced URL for lost password
@@ -159,7 +159,7 @@ final class Brutus {
 	/**
 	 * Filter `register_url` and protect it with Brutus nonce
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $register_url
 	 * @return string Nonced URL for registration
@@ -171,7 +171,7 @@ final class Brutus {
 	/**
 	 * Filter `nonce_user_logged_out` and return an ID based on cookie value
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @return integer
 	 */
@@ -182,7 +182,7 @@ final class Brutus {
 	/**
 	 * Filter `site_url` and maybe add nonce to it
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $url
 	 * @param  string $path
@@ -204,7 +204,7 @@ final class Brutus {
 	/**
 	 * Filter `wp_redirect` and maybe add nonce to URL
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $url
 	 * @return string Nonced URL to redirect to
@@ -223,7 +223,7 @@ final class Brutus {
 	/**
 	 * Kill the nonce cookie when a user successfully logs in
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	public function wp_login() {
 		return $this->cookie->kill_cookie();
@@ -232,7 +232,7 @@ final class Brutus {
 	/**
 	 * Quick-init cookies immediately after logout
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	public function wp_logout() {
 		$this->cookie_init();
@@ -241,24 +241,26 @@ final class Brutus {
 	/** Protected Helpers *****************************************************/
 
 	/**
-	 * Add Brutus's bouncer nonce to any URL
+	 * Add bouncer nonce to any URL
 	 *
-	 * Note: This is an unescaped version of `wp_nonce_url()`
+	 * Note: This is an un-escaped version of `wp_nonce_url()`
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 *
 	 * @param  string $url
 	 * @return string A URL with the bouncer nonce
 	 */
 	protected function add_nonce_to_url( $url = '' ) {
 		$action_url = str_replace( '&amp;', '&', $url );
-		return add_query_arg( $this->nonce_name, wp_create_nonce( $this->nonce_action ), $action_url );
+		$nonce      = self::pluggable_create_nonce( $this->nonce_action );
+
+		return add_query_arg( $this->nonce_name, $nonce, $action_url );
 	}
 
 	/**
 	 * Verify nonce
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	protected function verify_nonce() {
 
@@ -279,7 +281,7 @@ final class Brutus {
 	/**
 	 * Do the safe redirect to the root of the site
 	 *
-	 * @since Brutus (1.0.0)
+	 * @since 1.0.0 Brutus
 	 */
 	protected function redirect() {
 		wp_safe_redirect( network_home_url() );
@@ -297,13 +299,12 @@ final class Brutus {
 	 * @param  string $action
 	 * @return boolean|int
 	 */
-	public static function pluggable_verify_nonce( $nonce = '', $action = -1 ) {
-
-		$nonce = (string) $nonce;
+	public static function pluggable_verify_nonce( $_nonce = '', $action = -1 ) {
+		$_nonce = (string) $_nonce;
 
 		// Attempt to salt
-        list( $nonce, $salt ) = explode( '_', $nonce );
-		if ( ! $salt ) {
+        list( $nonce, $salt ) = explode( '_', $_nonce );
+		if ( empty( $salt ) ) {
 			return false;
 		}
 
