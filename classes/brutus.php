@@ -64,7 +64,6 @@ final class Brutus {
 	public function __construct() {
 
 		// No priv actions & filters
-		add_action( 'login_init',  array( $this, 'login_init'  ) );
 		add_filter( 'wp_redirect', array( $this, 'wp_redirect' ) );
 		add_action( 'wp_login',    array( $this, 'wp_login'    ) );
 		add_action( 'wp_logout',   array( $this, 'wp_logout'   ) );
