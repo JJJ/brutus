@@ -48,6 +48,45 @@ function wp_create_nonce( $action = -1 ) {
 }
 endif;
 
+if ( ! function_exists( 'wp_set_current_user' ) ) :
+/**
+ * Changes the current user by ID or name.
+ *
+ * Set $id to null and specify a name if you do not know a user's ID.
+ *
+ * Some WordPress functionality is based on the current user and not based on
+ * the signed in user. Therefore, it opens the ability to edit and perform
+ * actions on users who aren't signed in.
+ *
+ * @since 1.2.0 Brutus
+ * @global WP_User $current_user The current user object which holds the user data.
+ *
+ * @param int    $id   User ID
+ * @param string $name User's username
+ * @return WP_User Current user User object
+ */
+function wp_set_current_user( $id, $name = '' ) {
+	global $current_user;
+
+	// If `$id` matches the user who's already current, there's nothing to do.
+	if ( isset( $current_user )
+		&& ( $current_user instanceof WP_User )
+		&& ( $id == $current_user->ID )
+		&& ( null !== $id )
+	) {
+		return $current_user;
+	}
+
+	$current_user = new WP_User( $id, $name );
+
+	setup_userdata( $current_user->ID );
+
+	do_action( 'set_current_user' );
+
+	return $current_user;
+}
+endif;
+
 if ( ! function_exists( 'is_user_logged_in' ) ) :
 /**
  * Checks if the current visitor is a logged in user.
