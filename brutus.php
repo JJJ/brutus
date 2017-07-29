@@ -1,23 +1,15 @@
 <?php
 
 /**
- * The Brutus Plugin
- *
- * Brutus is your bouncer; your muscle; your protector & defender
- *
- * @package Brutus
- */
-
-/**
  * Plugin Name: Brutus
- * Plugin URI:  https://flox.io
- * Description: Brutus is your bouncer; your muscle; your protector & defender
+ * Plugin URI:  https://pluginsloaded.com/plugins/brutus/
  * Author:      John James Jacoby
- * Author URI:  https://flox.io
- * Version:     1.1.0
+ * Author URI:  https://jjj.blog
+ * License:     GPLv2 or later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
+ * Description: Your bouncer; your muscle; your protector & defender
+ * Version:     1.2.0
  * Text Domain: brutus
- * Domain Path: /languages/
- * License:     GPLv2 or later (license.txt)
  */
 
 // Exit if accessed directly
