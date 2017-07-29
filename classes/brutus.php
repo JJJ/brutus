@@ -336,6 +336,8 @@ final class Brutus {
 			return 2;
 		}
 
+		do_action( 'wp_verify_nonce_failed', $nonce, $action, $user, $token );
+
 		// Invalid nonce
 		return false;
 	}
