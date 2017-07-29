@@ -58,10 +58,20 @@ final class Brutus {
 	/** Constructor ***********************************************************/
 
 	/**
+	 * Construct
 	 *
 	 * @since 1.0.0 Brutus
 	 */
 	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, 'setup_hooks' ) );
+	}
+
+	/**
+	 * Setup actions & filters
+	 *
+	 * @since 1.2.0
+	 */
+	public function setup_hooks() {
 
 		// No priv actions & filters
 		add_filter( 'wp_redirect', array( $this, 'wp_redirect' ) );

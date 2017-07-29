@@ -15,6 +15,10 @@
 // Exit if accessed directly
 defined( 'ABSPATH' ) || exit;
 
+// Includes
+require_once dirname( __FILE__ ) . '/classes/brutus.php';
+require_once dirname( __FILE__ ) . '/classes/cookie.php';
+
 if ( ! function_exists( 'wp_verify_nonce' ) ) :
 /**
  * Verify that correct nonce was used with time limit.
@@ -47,20 +51,3 @@ function wp_create_nonce( $action = -1 ) {
 	return Brutus::pluggable_create_nonce( $action );
 }
 endif;
-
-/**
- * Init wrapper
- *
- * @since 1.2.0 Brutus
- */
-function _brutus() {
-
-	// Includes
-	require_once dirname( __FILE__ ) . '/classes/brutus.php';
-	require_once dirname( __FILE__ ) . '/classes/cookie.php';
-
-	// That no-good sailor's got me girl!
-	new Brutus();
-}
-add_action( 'init',       array( $this, '_brutus'  ) );
-add_action( 'login_init', array( $this, '_brutus'  ) );
